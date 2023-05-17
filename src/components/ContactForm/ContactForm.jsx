@@ -19,7 +19,7 @@ export const ContactForm = ({ addContact }) => {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    addContact({ name, number }); // функцыя додавання контакту
+    addContact({ name, number }); // функція додавання контакту
     setName(''); // очищення полів форми
     setNumber(''); // очищення полів форми
   };
