@@ -42,25 +42,21 @@ export const App = () => {
       return alert(`${name} is already in contacts`);
     }
 
-    setContacts(prevState => [...prevState, { name, number }]);
+    setContacts(prevState => [...prevState, { id: nanoid(), name, number }]);
   };
 
   // фільтрує контакти в залежності від даних інпута
-  const onFilter = () => {
-    console.log('Виклик onFilter');
-    const filteredContacts = contacts.filter(contact =>
+  const onFilter = () =>
+    contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-    console.log('Відфільтрований масив: ', filteredContacts);
-    return filteredContacts;
+
+  // функція для видалення контакту
+  const deleteContact = id => {
+    const filteredContacts = contacts.filter(contact => contact.id !== id);
+    // записуємо в state масив контактів, id яких не співпадає з обраним для видалення
+    setContacts(filteredContacts);
   };
-
-
-  //   deleteContact = id => {
-  //     this.setState(prevState => ({
-  //       contacts: this.state.contacts.filter(contact => contact.id !== id),
-  //     }));
-  //   };
 
   return (
     <Layout>
@@ -68,8 +64,7 @@ export const App = () => {
       <ContactForm addContact={addContact} />
       <h2>Contacts</h2>
       <Filter filter={filter} handleFilter={handleInputChange} />
-      <ContactList contacts={onFilter()} />
-      {/* <ContactList contacts={onFilter} deleteContact={deleteContact} /> */}
+      <ContactList contacts={onFilter()} deleteContact={deleteContact} />
     </Layout>
   );
 };
