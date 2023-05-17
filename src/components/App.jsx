@@ -1,10 +1,9 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
+// import { ContactList } from './ContactList/ContactList';
+// import { Filter } from './Filter/Filter';
 import { Layout } from './Layout/Layout';
-
 
 const initialContacts = [
   { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
@@ -13,18 +12,51 @@ const initialContacts = [
   { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
 ];
 
+export const App = () => {
+  // початкові контакти беремо із localStorage або із initialContacts,
+  //  якщо localStorage пустий
+  // const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem('contacts')) ?? initialContacts);
+  const [contacts, setContacts] = useState([]);
+  console.log('База контактів: ', contacts);
+  // const [filter, setFilter] = useState('');
 
+  // зберігаємо контакти в localStorage
+  useEffect(() => {
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
+  // додає новий контакт
+  const addContact = ({ name, number }) => {
+
+    const hasName = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (hasName) {
+      return alert(`${name} is already in contacts`);
+    }
+
+    setContacts(prevState => [...prevState, {name, number}]);
+  };
+
+  return (
+    <Layout>
+      <h1>Phonebook</h1>
+      <ContactForm addContact={addContact} />
+      <h2>Contacts</h2>
+      {/* <Filter filter={filter} handleFilter={handleInputChange} /> */}
+      {/* <ContactList contacts={filter} deleteContact={deleteContact} /> */}
+    </Layout>
+  );
+};
 // export class App extends Component {
 //   state = {
 //     contacts: [],
 //     filter: '',
 //   };
 
-
-  
 //   componentDidMount() {
-  
+
 //       // беремо дані з localStorage
 //     const savedContacts = localStorage.getItem('contacts');
 
@@ -40,9 +72,8 @@ const initialContacts = [
 //     }
 //   }
 
-  
 //   componentDidUpdate(prevProps, prevState) {
-    
+
 //         // якщо дані в state змінились
 //     if (prevState.contacts !== this.state.contacts) {
 
@@ -50,7 +81,6 @@ const initialContacts = [
 //       localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
 //     }
 //   }
-
 
 //   // міняє значення state після вводу даних в інпут
 //   handleInputChange = e => {
@@ -60,7 +90,6 @@ const initialContacts = [
 //     });
 //   };
 
- 
 //   // додає новий контакт
 //   addContact = ({ name, number }) => {
 //     const hasName = this.state.contacts.find(
@@ -100,8 +129,6 @@ const initialContacts = [
 //       contacts: this.state.contacts.filter(contact => contact.id !== id),
 //     }));
 //   };
-
-
 
 //   render() {
 

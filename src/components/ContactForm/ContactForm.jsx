@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -56,8 +54,6 @@ export const ContactForm = ({ addContact }) => {
     </StyledForm>
   );
 };
-
-
 
 ContactForm.propTypes = {
   addContact: PropTypes.func.isRequired,
