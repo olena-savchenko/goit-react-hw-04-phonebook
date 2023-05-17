@@ -11,7 +11,7 @@ export const ContactList = ({ contacts, deleteContact }) => {
           name={name}
           number={number}
           id={id}
-          deleteContact={deleteContact}
+          // deleteContact={deleteContact}
         />
       ))}
     </StyledList>
